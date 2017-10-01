@@ -24,6 +24,7 @@ class SearchBar extends Component {
         <input
           placeholder='Get a five-day forecast in your favorite cities'
           className='form-control'
+          value={this.state.term}
           onChange={this.onInputChange}
           />
         <span className="input-group-btn">
