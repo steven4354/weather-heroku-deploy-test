@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Sparklines, SparklinesLine } from 'react-sparklines'
 import Chart from '../components/chart'
+import GoogleMap from '../components/google_map'
 
 class WeatherList extends Component {
 
@@ -11,20 +12,24 @@ class WeatherList extends Component {
     const temps = citydata.list.map(function(obj){return obj.main.temp})
     const pressures = citydata.list.map(function(obj){return obj.main.pressure})
     const humidities = citydata.list.map(function(obj){return obj.main.humidity})
+    const {lon, lat} = citydata.city.coord
+    //const lon = citydata.city.coord.lon
+    //const lat = citydata.city.coord.lat
 
     console.log('renderWeather ran');
     console.log(temps);
+    console.log("lat", lat);
     return(
       <tr key={name}>
-        <td>{name}</td>
+        <td><GoogleMap lon={lon} lat={lat} /></td>
         <td>
-          <Chart data={temps} color="red" />
+          <Chart data={temps} color="red" units="K"/>
         </td>
         <td>
-          <Chart data={temps} color="orange" />
+          <Chart data={pressures} color="orange" units="hPa"/>
         </td>
         <td>
-          <Chart data={temps} color="yellow" />          
+          <Chart data={humidities} color="yellow" units="%"/>
         </td>
       </tr>
     )
@@ -35,10 +40,10 @@ class WeatherList extends Component {
       <table className="table table-hover">
         <thead>
           <tr>
-            <th>City</th>
-            <th>Temperature</th>
-            <th>Pressure</th>
-            <th>Humidity</th>
+            <th >City</th>
+            <th >Temperature (K)</th>
+            <th >Pressure (hPa)</th>
+            <th >Humidity (%)</th>
           </tr>
         </thead>
         <tbody>
